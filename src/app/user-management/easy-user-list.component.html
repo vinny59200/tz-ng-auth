@@ -1,0 +1,72 @@
+<main>
+  <table>
+    <thead>
+      <tr>
+        <th>uuid</th>
+        <th>username</th>
+        <th>password</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.uuid }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.password }}</td>
+        <td>
+          <button (click)="handleEditClick(user)">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          <button (click)="showCreateUserModal = true">
+            Create new User
+          </button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div *ngIf="showCreateUserModal">
+    <div class="overlay" (click)="showCreateUserModal = false"></div>
+    <div class="modal">
+      <form (ngSubmit)="editingUser ? updateUser() : createUser()">
+        <ng-container *ngIf="editingUser; else newUserForm">
+          <label>
+            UUID:
+            <input type="text" name="uuid" [(ngModel)]="editingUser.uuid" required />
+          </label>
+          <label>
+            Username:
+            <input type="text" name="username" [(ngModel)]="editingUser.username" required />
+          </label>
+          <label>
+            Password:
+            <input type="password" name="password" [(ngModel)]="editingUser.password" required />
+          </label>
+        </ng-container>
+        <ng-template #newUserForm>
+          <label>
+            UUID:
+            <input type="text" name="uuid" [(ngModel)]="newUser.uuid" required />
+          </label>
+          <label>
+            Username:
+            <input type="text" name="username" [(ngModel)]="newUser.username" required />
+          </label>
+          <label>
+            Password:
+            <input type="password" name="password" [(ngModel)]="newUser.password" required />
+          </label>
+        </ng-template>
+        <button type="submit">
+          {{ editingUser ? 'Update User' : 'Create User' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</main>
