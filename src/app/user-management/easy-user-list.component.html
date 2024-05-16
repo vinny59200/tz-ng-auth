@@ -50,10 +50,7 @@
           </label>
         </ng-container>
         <ng-template #newUserForm>
-          <label>
-            UUID:
-            <input type="text" name="uuid" [(ngModel)]="newUser.uuid" required />
-          </label>
+          <input type="hidden" name="uuid" [(ngModel)]="newUser.uuid"  required />
           <label>
             Username:
             <input type="text" name="username" [(ngModel)]="newUser.username" required />
@@ -63,6 +60,7 @@
             <input type="password" name="password" [(ngModel)]="newUser.password" required />
           </label>
         </ng-template>
+        
         <button type="submit">
           {{ editingUser ? 'Update User' : 'Create User' }}
         </button>

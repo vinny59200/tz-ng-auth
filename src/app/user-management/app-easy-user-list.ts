@@ -4,6 +4,7 @@ import { EasyUser } from '../model/EasyUser';
 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-easy-user-list',
@@ -14,11 +15,10 @@ import { CommonModule } from '@angular/common';
 })
 export class EasyUserListComponent implements OnInit {
   showCreateUserModal = false;
-  newUser: EasyUser = { uuid: '', username: '', password: '' };
+  newUser: EasyUser = { uuid: this.generateUUID(), username: '', password: '' };
   users: EasyUser[] = [];
   editingUser: EasyUser | null = null;
 
-  constructor() {}
 
   ngOnInit(): void {
     const easyUsers: EasyUser[] = [
@@ -34,7 +34,7 @@ export class EasyUserListComponent implements OnInit {
   createUser(): void {
     this.users = [...this.users, this.newUser];
     this.showCreateUserModal = false;
-    this.newUser = { uuid: '', username: '', password: '' };
+    this.newUser = { uuid: this.generateUUID(), username: '', password: '' };
   }
 
   handleInputChange(event: any, isEditing = false): void {
@@ -58,4 +58,9 @@ export class EasyUserListComponent implements OnInit {
     this.showCreateUserModal = false;
     this.editingUser = null;
   }
+
+  generateUUID(): string {
+    return uuidv4(); // This will generate a new UUID
+  }
+
 }
